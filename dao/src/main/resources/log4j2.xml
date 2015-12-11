@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="pattern">%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+    </Properties>
+	<Appenders>
+		<Console name="Console">
+			<PatternLayout pattern="${pattern}"/>
+		</Console>
+
+		<RollingFile name="appender-server-1-all" fileName="${env:CATALINA_HOME}/logs/by.expert.soft-all.log"  filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+			<PatternLayout>
+				<Pattern>${pattern}</Pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10MB" />
+			</Policies>
+		</RollingFile>
+
+		<RollingFile name="appender-server-1-error" fileName="${env:CATALINA_HOME}/logs/by.expert.soft-error.log"  filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+			<PatternLayout>
+				<Pattern>${pattern}</Pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10MB" />
+			</Policies>
+		</RollingFile>
+
+	</Appenders>
+
+	<Loggers>
+		<Root level="all">
+			<AppenderRef ref="Console" level="error"/>
+			<AppenderRef ref="appender-server-1-all" level="all"/>
+			<AppenderRef ref="appender-server-1-error" level="error"/>
+		</Root>
+	</Loggers>
+</Configuration>
